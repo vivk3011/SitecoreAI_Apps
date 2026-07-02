@@ -1,0 +1,101 @@
+[
+  {
+    "id": "prod-1001",
+    "name": "Wireless Ergonomic Mouse",
+    "sku": "MOU-ERGO-001",
+    "imageUrl": "https://picsum.photos/seed/prod-1001/600/400",
+    "price": 39.99,
+    "description": "Comfort-first wireless mouse with silent clicks and adjustable DPI.",
+    "category": "Accessories"
+  },
+  {
+    "id": "prod-1002",
+    "name": "Mechanical Keyboard 75%",
+    "sku": "KEY-MECH-075",
+    "imageUrl": "https://picsum.photos/seed/prod-1002/600/400",
+    "price": 89.5,
+    "description": "Hot-swappable 75% keyboard with RGB backlight and tactile switches.",
+    "category": "Accessories"
+  },
+  {
+    "id": "prod-1003",
+    "name": "4K UltraWide Monitor",
+    "sku": "MON-UW4K-340",
+    "imageUrl": "https://picsum.photos/seed/prod-1003/600/400",
+    "price": 499,
+    "description": "34-inch ultrawide monitor designed for multitasking and immersive visuals.",
+    "category": "Displays"
+  },
+  {
+    "id": "prod-1004",
+    "name": "USB-C Docking Station",
+    "sku": "DOC-USBC-012",
+    "imageUrl": "https://picsum.photos/seed/prod-1004/600/400",
+    "price": 129.99,
+    "description": "Multi-port docking station with HDMI, Ethernet, and dual USB-C passthrough.",
+    "category": "Peripherals"
+  },
+  {
+    "id": "prod-1005",
+    "name": "Noise-Canceling Headphones",
+    "sku": "AUD-NC-900",
+    "imageUrl": "https://picsum.photos/seed/prod-1005/600/400",
+    "price": 219.95,
+    "description": "Over-ear headphones with adaptive noise cancelation and long battery life.",
+    "category": "Audio"
+  },
+  {
+    "id": "prod-1006",
+    "name": "Portable SSD 1TB",
+    "sku": "STO-SSD1T-011",
+    "imageUrl": "https://picsum.photos/seed/prod-1006/600/400",
+    "price": 109.99,
+    "description": "Compact high-speed external SSD for backups and on-the-go projects.",
+    "category": "Storage"
+  },
+  {
+    "id": "prod-1007",
+    "name": "1080p Streaming Webcam",
+    "sku": "CAM-WEB-108",
+    "imageUrl": "https://picsum.photos/seed/prod-1007/600/400",
+    "price": 70,
+    "description": "Autofocus webcam with dual microphones and low-light correction.",
+    "category": "Cameras"
+  },
+  {
+    "id": "prod-1008",
+    "name": "Laptop Stand Aluminum",
+    "sku": "STA-LPTP-ALU",
+    "imageUrl": "https://picsum.photos/seed/prod-1008/600/400",
+    "price": 32.5,
+    "description": "Stable and foldable aluminum stand for improved posture and airflow.",
+    "category": "Office"
+  },
+  {
+    "id": "prod-1009",
+    "name": "Smart LED Desk Lamp",
+    "sku": "LGT-SMART-55",
+    "imageUrl": "https://picsum.photos/seed/prod-1009/600/400",
+    "price": 44.75,
+    "description": "App-controlled desk lamp with adjustable temperature and brightness presets.",
+    "category": "Lighting"
+  },
+  {
+    "id": "prod-1010",
+    "name": "Bluetooth Speaker Mini",
+    "sku": "AUD-SPK-MINI",
+    "imageUrl": "https://picsum.photos/seed/prod-1010/600/400",
+    "price": 58,
+    "description": "Pocket-sized Bluetooth speaker with punchy sound and IPX5 splash resistance.",
+    "category": "Audio"
+  },
+  {
+    "id": "prod-1011",
+    "name": "Test",
+    "sku": "CAM-WEB-100",
+    "imageUrl": "https://picsum.photos/seed/prod-1007/600/400",
+    "price": 100,
+    "description": "Webcam description",
+    "category": "Cameras"
+  }
+]
