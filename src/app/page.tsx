@@ -8,6 +8,33 @@ import { ProductList } from "@/components/ProductList";
 import type { Product } from "@/types/product";
 
 type FormMode = "add" | "edit";
+const SESSION_PRODUCTS_KEY = "productCrudApp.sessionProducts";
+
+function readSessionProducts(): Product[] | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const raw = window.sessionStorage.getItem(SESSION_PRODUCTS_KEY);
+  if (!raw) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    return Array.isArray(parsed) ? (parsed as Product[]) : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeSessionProducts(products: Product[]) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  window.sessionStorage.setItem(SESSION_PRODUCTS_KEY, JSON.stringify(products));
+}
 
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -28,6 +55,13 @@ export default function Home() {
 
   async function loadProducts() {
     try {
+      const sessionProducts = readSessionProducts();
+      if (sessionProducts) {
+        setProducts(sessionProducts);
+        setErrorMessage(null);
+        return;
+      }
+
       const response = await fetch("/api/products");
       if (!response.ok) {
         throw new Error("Unable to fetch products.");
@@ -35,6 +69,7 @@ export default function Home() {
 
       const data = (await response.json()) as Product[];
       setProducts(data);
+      writeSessionProducts(data);
       setErrorMessage(null);
     } catch (error) {
       setErrorMessage(
@@ -77,22 +112,13 @@ export default function Home() {
       setIsMutating(true);
       resetMessages();
 
-      const response = await fetch("/api/products", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newProduct),
-      });
-
-      const payload = (await response.json()) as Product | { message?: string };
-      if (!response.ok) {
-        const message =
-          "message" in payload && payload.message
-            ? payload.message
-            : "Failed to create product.";
-        throw new Error(message);
+      if (products.some((product) => product.id === newProduct.id)) {
+        throw new Error("A product with this id already exists.");
       }
 
-      setProducts((previous) => [...previous, payload as Product]);
+      const nextProducts = [...products, newProduct];
+      setProducts(nextProducts);
+      writeSessionProducts(nextProducts);
       setSuccessMessage("Product created successfully.");
       closeForm();
     } catch (error) {
@@ -109,26 +135,16 @@ export default function Home() {
       setIsMutating(true);
       resetMessages();
 
-      const response = await fetch(`/api/products/${updatedProduct.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedProduct),
-      });
-
-      const payload = (await response.json()) as Product | { message?: string };
-      if (!response.ok) {
-        const message =
-          "message" in payload && payload.message
-            ? payload.message
-            : "Failed to update product.";
-        throw new Error(message);
+      if (!products.some((product) => product.id === updatedProduct.id)) {
+        throw new Error("Product not found.");
       }
 
-      setProducts((previous) =>
-        previous.map((product) =>
-          product.id === updatedProduct.id ? (payload as Product) : product,
-        ),
+      const nextProducts = products.map((product) =>
+        product.id === updatedProduct.id ? updatedProduct : product,
       );
+
+      setProducts(nextProducts);
+      writeSessionProducts(nextProducts);
       setSuccessMessage("Product updated successfully.");
       closeForm();
     } catch (error) {
@@ -166,16 +182,9 @@ export default function Home() {
       setIsMutating(true);
       resetMessages();
 
-      const response = await fetch(`/api/products/${id}`, {
-        method: "DELETE",
-      });
-
-      const payload = (await response.json()) as { message?: string };
-      if (!response.ok) {
-        throw new Error(payload.message ?? "Failed to delete product.");
-      }
-
-      setProducts((previous) => previous.filter((product) => product.id !== id));
+      const nextProducts = products.filter((product) => product.id !== id);
+      setProducts(nextProducts);
+      writeSessionProducts(nextProducts);
       setSuccessMessage("Product deleted successfully.");
       setProductPendingDelete(null);
 
@@ -200,7 +209,8 @@ export default function Home() {
               Product Management
             </h1>
             <p className="mt-1 text-sm text-zinc-600">
-              Create, update, and delete products stored in local JSON.
+              Create, update, and delete products available in your store. 
+              All changes are stored in session storage and will be lost when the page is refreshed.
             </p>
           </div>
           <button
